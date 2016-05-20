@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+    <!-- 引入配置文件 -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <!-- 可以采用classpath和file两种寻址方式 -->
+                <value>classpath:mysql.properties</value>
+                <!--<value>file:mysql.properties</value>-->
+            </list>
+        </property>
+    </bean>
+
+    <!-- 定义一个dataSource，使用C3PO数据库连接池来进行管理 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl"
+                  value="jdbc:mysql://${mysql.host}:${mysql.port}/${mysql.database}?useUnicode=true&amp;characterEncoding=utf8"/>
+        <property name="user" value="${mysql.username}"/>
+        <property name="password" value="${mysql.password}"/>
+        <property name="acquireIncrement" value="1"/>
+        <property name="initialPoolSize" value="5"/>
+        <property name="maxPoolSize" value="20"/>
+        <property name="minPoolSize" value="5"/>
+        <property name="maxStatements" value="100"/>
+        <property name="testConnectionOnCheckout" value="true"/>
+    </bean>
+    <!-- 定义Mybatis的SessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- mybatis configuration location -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!-- mybatis mappers location -->
+        <property name="mapperLocations" value="classpath*:com/xg/mapper/*.xml"/>
+    </bean>
+
+    <!-- mybatis mapper configurations -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.xg.mapper"/>
+    </bean>
+
+    <!-- spring annotation configuration -->
+    <!-- 向 Spring 容器注册AutowiredAnnotationBeanPostProcessor、CommonAnnotationBeanPostProcessor、
+     PersistenceAnnotationBeanPostProcessor 以及 RequiredAnnotationBeanPostProcessor 这4个BeanPostProcessor。
+     注册这4个 BeanPostProcessor的作用，就是为了你的系统能够识别相应的注解。-->
+    <context:annotation-config/>
+    <context:component-scan base-package="com.xg.mapper"/>
+    <context:component-scan base-package="com.xg.service"/>
+
+    <!-- transaction configuration -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>
