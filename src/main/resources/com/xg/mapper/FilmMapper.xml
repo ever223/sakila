@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xg.mapper.FilmMapper">
+    <!-- 开启二级缓存 -->
+    <cache
+            eviction="FIFO"
+            flushInterval="60000"
+            size="512"
+            readOnly="true"/>
+    <resultMap id="filmMap" type="Film" autoMapping="true">
+        <!-- constructor - 类在实例化时,用来注入结果到构造方法中
+             idArg - ID 参数;标记结果作为 ID 可以帮助提高整体效能
+             arg - 注入到构造方法的一个普通结果 -->
+        <!--<constructor>-->
+            <!--<idArg  column="film_id" javaType="int"/>-->
+            <!--<arg column="title" javaType="string"/>-->
+        <!--</constructor>-->
+
+        <!-- id – 一个 ID 结果;标记结果作为 ID 可以帮助提高整体效能 -->
+        <id property="filmId" column="film_id"/>
+        <!-- result – 注入到字段或 JavaBean 属性的普通结果 -->
+        <result property="title" column="title"/>
+        <!-- autoMapping 自动映射 -->
+        <!--<result property="description" column="description"/>-->
+        <!--<result property="releaseYear" column="release_year"/>-->
+        <!--<result property="rentalDuration" column="rental_duration"/>-->
+        <!--<result property="rentalRate" column="rental_rate"/>-->
+        <!--<result property="length" column="length"/>-->
+        <!--<result property="replacementCost" column="replacement_cost"/>-->
+        <!--<result property="rating" column="rating"/>-->
+        <!--<result property="specialFeatures" column="special_features"/>-->
+        <!--<result property="lastUpdate" column="last_update"/>-->
+
+         <!--association – 一个复杂的类型关联;许多结果将包成这种类型 -->
+        <association property="language" javaType="Language">
+            <!-- 嵌入结果映射 – 结果映射自身的关联,或者参考一个 -->
+            <id property="languageId" column="language_id"/>
+            <result property="name" column="language_name"/>
+            <result property="lastUpdate" column="language_last_update"/>
+        </association>
+        <!-- collection – 复杂类型的集 -->
+        <collection property="actors" ofType="Actor">
+            <!-- 嵌入结果映射 – 结果映射自身的关联,或者参考一个 -->
+            <id property="actorId" column="actor_id"/>
+            <result property="firstName" column="first_name"/>
+            <result property="lastName" column="last_name"/>
+            <result property="lastUpdate" column="actor_last_update"/>
+        </collection>
+    </resultMap>
+
+    <select id="findByFilmId" resultMap="filmMap" useCache="true">
+        SELECT
+            f.film_id          AS film_id,
+            f.title            AS title,
+            f.description      AS description,
+            f.release_year     AS release_year,
+            f.rental_duration  AS rental_duration,
+            f.rental_rate      AS rental_rate,
+            f.length           AS length,
+            f.replacement_cost AS replacement_cost,
+            f.rating           AS rating,
+            f.special_features AS special_features,
+            f.last_update      AS last_update,
+            f.language_id      AS film_language_id,
+            l.language_id      AS language_id,
+            l.name             AS language_name,
+            l.last_update      AS language_last_update,
+            a.actor_id         AS actor_id,
+            a.first_name       AS first_name,
+            a.last_name        AS last_name,
+            a.last_update      AS actor_last_update
+        FROM film f
+            LEFT OUTER JOIN language l ON l.language_id = f.language_id
+            LEFT OUTER JOIN film_actor fa ON fa.film_id = f.film_id
+            LEFT OUTER JOIN actor a ON a.actor_id = fa.actor_id
+        WHERE f.film_id = #{id}
+    </select>
+</mapper>
