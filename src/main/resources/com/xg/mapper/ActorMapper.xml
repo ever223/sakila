@@ -1,7 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xg.mapper.ActorMapper" >
-    <select id="findActorById" resultType="Actor">
-        SELECT * FROM actor a WHERE a.actor_id = #{actorId}
+    <resultMap id="actor" type="Actor">
+        <id column="actor_id" property="actorId"/>
+        <result column="first_name" property="firstName"/>
+    </resultMap>
+    <sql id="selectActors">
+        SELECT *
+        FROM actor
+        WHERE ${columnName}
+    </sql>
+    <select
+            id="findActorById"
+            parameterType="int"
+            resultType="Actor">
+        <include refid="selectActors">
+            <property name="columnName" value="actor_id"/>
+        </include>
+         = #{id}
     </select>
+    <select
+            id="findActorByFirstName"
+            parameterType="string"
+            resultMap="actor">
+        <include refid="selectActors">
+            <property name="columnName" value="first_name"/>
+        </include>
+         = #{first_name}
+    </select>
+    <!-- 支持自动生成主键的字段 -->
+    <insert
+            id="insertActor"
+            parameterType="Actor"
+            useGeneratedKeys="true">
+        INSERT INTO actor(first_name, last_name, last_update)
+        VALUES (#{firstName, javaType=string, jdbcType=VARCHAR}, #{lastName, javaType=string, jdbcType=VARCHAR}, #{lastUpdate, javaType=date, jdbcType=TIMESTAMP})
+    </insert>
+    
+    <delete id="deleteActorById">
+        DELETE FROM actor
+        WHERE actor_id = #{actorId}
+    </delete>
 </mapper>

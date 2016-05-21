@@ -3,23 +3,24 @@ package com.xg.domain;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @AUTHOR: xiaoo_gan
- * @DATE: 2016-05-20 15:59.
+ * @DATE: 2016-05-20 19:58.
  * @DESCRIPTION:
  */
-
+// 注解别名
+@Alias("Country")
 @JsonSerialize
 @JsonNaming(PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy.class)
-public class Actor implements Serializable {
+public class Country implements Serializable {
 
-    private int actorId;
-    private String firstName;
-    private String lastName;
+    private int countryId;
+    private String country;
     private Date lastUpdate;
 
     public Date getLastUpdate() {
@@ -30,27 +31,19 @@ public class Actor implements Serializable {
         this.lastUpdate = lastUpdate;
     }
 
-    public int getActorId() {
-        return actorId;
+    public int getCountryId() {
+        return countryId;
     }
 
-    public void setActorId(int actorId) {
-        this.actorId = actorId;
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getCountry() {
+        return country;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

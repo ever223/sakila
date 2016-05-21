@@ -18,11 +18,31 @@
     <!--<setting name="jdbcTypeForNull" value="OTHER"/>-->
     <!--<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>-->
     <!--</settings>-->
+
     <settings>
+        <!-- 该配置影响的所有映射器中配置的缓存的全局开关 -->
+        <setting name="cacheEnabled" value="true"/>
+        <!-- 是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN 到经典 Java 属性名 aColumn 的类似映射。 -->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
 
+    <!-- 类型别名是为 Java 类型设置一个短的名字。它只和 XML 配置有关，存在的意义仅在于用来减少类完全限定名的冗余。 -->
     <typeAliases>
+        <!-- 指定单个Java Bean -->
         <typeAlias type="com.xg.domain.Actor" alias="Actor"/>
+        <!-- 也可以指定一个包名，MyBatis 会在包名下面搜索需要的 Java Bean;
+         在没有注解的情况下，会使用 Bean 的首字母小写的非限定类名来作为它的别名;
+         若有注解，则别名为其注解值 -->
+        <package name="com.xg.domain"/>
     </typeAliases>
+    <!--<mappers>-->
+        <!--&lt;!&ndash; Using mapper interface classes &ndash;&gt;-->
+        <!--<mapper class="com.xg.mapper.CountryMapper"/>-->
+        <!--&lt;!&ndash; Using classpath relative resources &ndash;&gt;-->
+        <!--<mapper resource="com/xg/mapper/ActorMapper.xml"/>-->
+        <!--&lt;!&ndash; Using url fully qualified paths &ndash;&gt;-->
+        <!--<mapper url="file:///com/xg/mapper/CountryMapper.xml"/>-->
+        <!--&lt;!&ndash; Register all interfaces in a package as mappers &ndash;&gt;-->
+        <!--<package name="com.xg.mapper"/>-->
+    <!--</mappers>-->
 </configuration>
