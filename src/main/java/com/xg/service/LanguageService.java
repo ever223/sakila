@@ -24,6 +24,7 @@ import java.util.List;
 public class LanguageService {
 
     private final Log logger = LogFactory.getLog(this.getClass());
+
     @Autowired
     private LanguageMapper languageMapper;
 
@@ -37,6 +38,11 @@ public class LanguageService {
         return languageMapper.list();
     }
 
+    @Cacheable("languageByName")
+    public List<Language> findByName(String name) {
+        return languageMapper.findByName(name);
+    }
+
     @CacheEvict(value = {"languages"}, allEntries = true)
     @Transactional(readOnly = false)
     public boolean add(Language language) {
@@ -48,7 +54,7 @@ public class LanguageService {
         return true;
     }
 
-    @CacheEvict(value = {"languages", "languageById"}, allEntries = true)
+    @CacheEvict(value = {"languages", "languageById", "languageByName"}, allEntries = true)
     @Transactional(readOnly = false)
     public boolean update(Language language) {
         if (language == null) {
@@ -59,7 +65,7 @@ public class LanguageService {
         return true;
     }
 
-    @CacheEvict(value = {"languages", "languageById"}, allEntries = true)
+    @CacheEvict(value = {"languages", "languageById", "languageByName"}, allEntries = true)
     @Transactional(readOnly = false)
     public boolean delete(Language language) {
         if (language == null) {

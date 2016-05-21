@@ -36,6 +36,12 @@ public class LanguageController {
         return languageService.list();
     }
 
+    @RequestMapping(value = "/name", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Language> getLanguageByName(@RequestParam(required = true) String name) {
+        return languageService.findByName(name);
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public boolean getLanguageList(@RequestBody Language language) {
