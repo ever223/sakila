@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -21,6 +22,7 @@ import java.lang.reflect.Method;
  */
 @Configuration
 @EnableCaching
+//@PropertySource("classpath:redis.properties")
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
     @Value("${redis.hostName}")

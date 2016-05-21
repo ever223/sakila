@@ -14,9 +14,13 @@ import java.util.List;
  * @DESCRIPTION:
  */
 @Mapper
+@CacheNamespace(size = 512)
 public interface CategoryMapper {
 
     @SelectProvider(type = CategorySqlProvider.class, method = "getId")
+    //比如useCache = true表示本次查询结果被缓存以提高下次查询速度，
+    // flushCache = false表示下次查询时不刷新缓存，
+    // timeout = 10000表示查询结果缓存10000秒。
     @Options(useCache = true, flushCache = Options.FlushCachePolicy.FALSE, timeout = 10000)
     @Results(id = "category", value = {
             @Result(id = true, property = "categoryId", column = "category_id", javaType = int.class, jdbcType = JdbcType.INTEGER),

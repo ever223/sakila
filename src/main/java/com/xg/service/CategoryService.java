@@ -5,6 +5,8 @@ import com.xg.mapper.CategoryMapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,14 +28,17 @@ public class CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Cacheable("categoryById")
     public Category get(int id) {
         return categoryMapper.get(id);
     }
 
+    @Cacheable("categoryByName")
     public List<Category> findByName(String name) {
         return categoryMapper.findByName(name);
     }
 
+    @CacheEvict(value = {"categoryByName"}, allEntries = true)
     @Transactional(readOnly = false)
     public boolean add(Category category) {
         if (category == null) {
