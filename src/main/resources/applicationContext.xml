@@ -13,6 +13,7 @@
             <list>
                 <!-- 可以采用classpath和file两种寻址方式 -->
                 <value>classpath:mysql.properties</value>
+                <value>classpath:redis.properties</value>
                 <!--<value>file:mysql.properties</value>-->
             </list>
         </property>
@@ -50,9 +51,10 @@
     <!-- 向 Spring 容器注册AutowiredAnnotationBeanPostProcessor、CommonAnnotationBeanPostProcessor、
      PersistenceAnnotationBeanPostProcessor 以及 RequiredAnnotationBeanPostProcessor 这4个BeanPostProcessor。
      注册这4个 BeanPostProcessor的作用，就是为了你的系统能够识别相应的注解。-->
-    <context:annotation-config/>
     <context:component-scan base-package="com.xg.mapper"/>
     <context:component-scan base-package="com.xg.service"/>
+    <context:component-scan base-package="com.xg.config"/>
+    <context:annotation-config/>
 
     <!-- transaction configuration -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

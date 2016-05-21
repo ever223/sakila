@@ -1,9 +1,7 @@
 package com.xg.mapper;
 
 import com.xg.domain.Language;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -24,5 +22,9 @@ public interface LanguageMapper {
     @Insert("insert into language(name, last_update) values(#{name}, #{lastUpdate})")
     void add(Language language);
 
+    @Update("update language set name = #{name}, last_update = #{lastUpdate} where language_id = #{languageId}")
+    void update(Language language);
 
+    @Delete("delete from language where language_id = #{languageId}")
+    void delete(Language language);
 }

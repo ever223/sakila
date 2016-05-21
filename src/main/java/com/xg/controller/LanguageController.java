@@ -1,8 +1,6 @@
 package com.xg.controller;
 
-import com.xg.domain.Actor;
 import com.xg.domain.Language;
-import com.xg.service.ActorService;
 import com.xg.service.LanguageService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,6 +15,7 @@ import java.util.List;
  * @DATE: 2016-05-21 17:27.
  * @DESCRIPTION:
  */
+
 @Controller
 @RequestMapping("/rest/language")
 public class LanguageController {
@@ -43,5 +42,16 @@ public class LanguageController {
         return languageService.add(language);
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean updateLanguageList(@RequestBody Language language) {
+        return languageService.update(language);
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @ResponseBody
+    public boolean deleteLanguageList(@RequestBody Language language) {
+        return languageService.delete(language);
+    }
 
 }
