@@ -24,7 +24,7 @@ public class CategorySqlProvider {
             SELECT("*");
             FROM(TABLE_NAME);
             if (StringUtils.isNotEmpty(name)) {
-                WHERE("name like concat('%', #{name}, '%')");
+                WHERE("binary name like concat('%', #{name}, '%')");
             }
         }}.toString();
     }

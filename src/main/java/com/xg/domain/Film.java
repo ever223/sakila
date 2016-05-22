@@ -29,6 +29,7 @@ public class Film implements Serializable {
 //    private RatingType rating;
     private String rating;
     private String specialFeatures;
+    private List<Category> categories;
     private List<Actor> actors;
     private Date lastUpdate;
 
@@ -147,5 +148,13 @@ public class Film implements Serializable {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }

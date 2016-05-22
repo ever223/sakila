@@ -35,7 +35,9 @@ public interface CategoryMapper {
     List<Category> findByName(@Param("name") String name);
 
     @InsertProvider(type = CategorySqlProvider.class, method = "addSql")
-    @Options(flushCache = Options.FlushCachePolicy.TRUE, timeout = 20000, useGeneratedKeys = true)
+    // useGeneratedKeys:是否生成主键
+    // keyProperty = "id" ，sql执行完毕后，传入参数HashMap  就会被自动附上id=新生成记录的id值
+    @Options(flushCache = Options.FlushCachePolicy.TRUE, timeout = 20000, useGeneratedKeys = true, keyProperty = "categoryId")
     void add(Category category);
 
     @SelectProvider(type = CategorySqlProvider.class, method = "getAll")
@@ -44,9 +46,9 @@ public interface CategoryMapper {
 
     @UpdateProvider(type = CategorySqlProvider.class, method = "update")
     @Options(flushCache = Options.FlushCachePolicy.TRUE, timeout = 10000)
-    void update(Category category);
+    int update(Category category);
 
     @DeleteProvider(type = CategorySqlProvider.class, method = "delete")
     @Options(flushCache = Options.FlushCachePolicy.TRUE, timeout = 10000)
-    void delete(Category category);
+    int delete(Category category);
 }

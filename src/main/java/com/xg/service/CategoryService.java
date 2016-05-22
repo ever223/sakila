@@ -40,34 +40,29 @@ public class CategoryService {
 
     @CacheEvict(value = {"categoryByName"}, allEntries = true)
     @Transactional(readOnly = false)
-    public boolean add(Category category) {
+    public Category add(Category category) {
         if (category == null) {
-            return false;
+            return null;
         }
         category.setLastUpdate(new Date());
         categoryMapper.add(category);
-        return true;
+        return category;
     }
 
+    @Cacheable("categoryAll")
     public List<Category> all() {
         return categoryMapper.all();
     }
 
+    @CacheEvict(value = {"categoryAll", "categoryByName", "categoryById"}, allEntries = true)
     @Transactional(readOnly = false)
     public boolean update(Category category) {
-        if (category == null) {
-            return false;
-        }
-        categoryMapper.update(category);
-        return true;
+        return category != null && categoryMapper.update(category) == 1;
     }
 
+    @CacheEvict(value = {"categoryAll", "categoryByName", "categoryById"}, allEntries = true)
     @Transactional(readOnly = false)
     public boolean delete(Category category) {
-        if (category == null) {
-            return false;
-        }
-        categoryMapper.delete(category);
-        return true;
+        return category != null && categoryMapper.delete(category) == 1;
     }
 }

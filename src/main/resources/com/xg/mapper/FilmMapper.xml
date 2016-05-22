@@ -12,8 +12,8 @@
              idArg - ID 参数;标记结果作为 ID 可以帮助提高整体效能
              arg - 注入到构造方法的一个普通结果 -->
         <!--<constructor>-->
-            <!--<idArg  column="film_id" javaType="int"/>-->
-            <!--<arg column="title" javaType="string"/>-->
+        <!--<idArg  column="film_id" javaType="int"/>-->
+        <!--<arg column="title" javaType="string"/>-->
         <!--</constructor>-->
 
         <!-- id – 一个 ID 结果;标记结果作为 ID 可以帮助提高整体效能 -->
@@ -31,7 +31,7 @@
         <!--<result property="specialFeatures" column="special_features"/>-->
         <!--<result property="lastUpdate" column="last_update"/>-->
 
-         <!--association – 一个复杂的类型关联;许多结果将包成这种类型 -->
+        <!--association – 一个复杂的类型关联;许多结果将包成这种类型 -->
         <association property="language" javaType="Language">
             <!-- 嵌入结果映射 – 结果映射自身的关联,或者参考一个 -->
             <id property="languageId" column="language_id"/>
@@ -39,6 +39,11 @@
             <result property="lastUpdate" column="language_last_update"/>
         </association>
         <!-- collection – 复杂类型的集 -->
+        <collection property="categories" ofType="Category">
+            <id property="categoryId" column="category_id"/>
+            <result property="name" column="category_name"/>
+            <result property="lastUpdate" column="category_last_update"/>
+        </collection>
         <collection property="actors" ofType="Actor">
             <!-- 嵌入结果映射 – 结果映射自身的关联,或者参考一个 -->
             <id property="actorId" column="actor_id"/>
@@ -65,12 +70,17 @@
             l.language_id      AS language_id,
             l.name             AS language_name,
             l.last_update      AS language_last_update,
+            c.category_id      AS category_id,
+            c.name             AS category_name,
+            c.last_update      AS category_last_update,
             a.actor_id         AS actor_id,
             a.first_name       AS first_name,
             a.last_name        AS last_name,
             a.last_update      AS actor_last_update
         FROM film f
             LEFT OUTER JOIN language l ON l.language_id = f.language_id
+            LEFT OUTER JOIN film_category fc ON fc.film_id = f.film_id
+            LEFT OUTER JOIN category c ON fc.category_id = c.category_id
             LEFT OUTER JOIN film_actor fa ON fa.film_id = f.film_id
             LEFT OUTER JOIN actor a ON a.actor_id = fa.actor_id
         WHERE f.film_id = #{id}

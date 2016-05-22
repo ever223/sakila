@@ -36,7 +36,7 @@ public class CategoryController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public boolean getCategory(@RequestBody Category category) {
+    public Category getCategory(@RequestBody Category category) {
         return categoryService.add(category);
     }
 
