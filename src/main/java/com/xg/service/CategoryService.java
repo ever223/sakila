@@ -2,8 +2,8 @@ package com.xg.service;
 
 import com.xg.domain.Category;
 import com.xg.mapper.CategoryMapper;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,7 +23,7 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class CategoryService {
 
-    private final Log logger = LogFactory.getLog(CategoryService.class);
+    private final static Logger logger = LoggerFactory.getLogger(CategoryService.class);
 
     @Autowired
     private CategoryMapper categoryMapper;
