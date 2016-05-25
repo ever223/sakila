@@ -46,6 +46,14 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.xg.mapper"/>
     </bean>
+    <!--<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">-->
+        <!--<property name="basePackage" value="com.xg.mapper"/>-->
+        <!--<property name="properties">-->
+            <!--<value>-->
+                <!--mappers=tk.mybatis.mapper.common.Mapper-->
+            <!--</value>-->
+        <!--</property>-->
+    <!--</bean>-->
 
     <!-- spring annotation configuration -->
     <!-- 向 Spring 容器注册AutowiredAnnotationBeanPostProcessor、CommonAnnotationBeanPostProcessor、

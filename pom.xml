@@ -16,7 +16,7 @@
         <c3p0.version>0.9.1.2</c3p0.version>
         <log4j.version>1.2.17</log4j.version>
         <jedis.version>2.7.3</jedis.version>
-        <slf4j-log4j12.version>1.7.12</slf4j-log4j12.version>
+        <slf4j.version>1.7.12</slf4j.version>
         <spring-data-redis.version>1.6.0.RELEASE</spring-data-redis.version>
     </properties>
     <dependencies>
@@ -74,7 +74,16 @@
             <artifactId>c3p0</artifactId>
             <version>${c3p0.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>tk.mybatis</groupId>-->
+            <!--<artifactId>mapper</artifactId>-->
+            <!--<version>3.3.7</version>-->
+        <!--</dependency>-->
         <!-- JSON configuration -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -87,7 +96,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j-log4j12.version}</version>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>

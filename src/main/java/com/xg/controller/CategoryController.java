@@ -2,8 +2,8 @@ package com.xg.controller;
 
 import com.xg.domain.Category;
 import com.xg.service.CategoryService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/rest/category")
 public class CategoryController {
-    private final Log logger = LogFactory.getLog(CategoryController.class);
-    @Autowired
+    private final static Logger logger = LoggerFactory.getLogger(CategoryService.class);    @Autowired
     private CategoryService categoryService;
 
     @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)

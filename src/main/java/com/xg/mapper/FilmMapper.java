@@ -2,6 +2,9 @@ package com.xg.mapper;
 
 import com.xg.domain.Film;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
 
 /**
  * @AUTHOR: xiaoo_gan
@@ -11,4 +14,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface FilmMapper {
     Film findByFilmId(int id);
+    List<Film> findAll(String name, RowBounds rowBounds);
 }
